@@ -7,7 +7,8 @@ function Cuadrado() {
 }
 */
 import { Cuadrado } from "@/src/components/cuadrado";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { PropsWithChildren, ReactElement } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function RootLayout() {
   // Logica/Controller
@@ -31,39 +32,42 @@ export default function RootLayout() {
         </View>
         <Cuadrado />
       </View>
-      <MyScrollView />
+      <SeccionScrolleable titulo="Rojos">
+        {Array.from({ length: 10 }, (_, i) => (
+          <Cuadrado key={i} />
+        ))}
+      </SeccionScrolleable>
+      <SeccionScrolleable titulo="Verdes" hideTitle>
+        <Text>Verde 1</Text>
+        <Text>Verde 2</Text>
+        <Text>Verde 3</Text>
+      </SeccionScrolleable>
     </View>
   );
 }
 
-function MyScrollView() {
+type MyScrollViewProps = {
+  titulo: string;
+  hideTitle?: boolean;
+};
+const SeccionScrolleable = ({
+  titulo,
+  hideTitle = false,
+  children,
+}: PropsWithChildren<MyScrollViewProps>): ReactElement => {
   return (
-    <ScrollView
-      horizontal
-      style={styles.scrollView}
-      contentContainerStyle={styles.ScrollViewContent}
-    >
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-      <Cuadrado />
-    </ScrollView>
+    <View>
+      <Text>{hideTitle ? "" : titulo}</Text>
+      <ScrollView
+        horizontal
+        style={styles.scrollView}
+        contentContainerStyle={styles.ScrollViewContent}
+      >
+        {children}
+      </ScrollView>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
