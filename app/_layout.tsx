@@ -8,15 +8,80 @@ function Cuadrado() {
 */
 import { Cuadrado } from "@/src/components/cuadrado";
 import { PropsWithChildren, ReactElement } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function RootLayout() {
   // Logica/Controller
   const fondo = false;
 
+  const pressIn = () => {
+    alert("PRESS IN");
+  };
+
+  const press = () => {
+    alert("PRESS");
+  };
+
+  const pressOUt = () => {
+    alert("PRESS OUT");
+  };
+
+  // const pressConPosicion = (i: number) => {
+  //   return () => {
+  //     alert(`PRESS ${i}`);
+  //   };
+  // };
+
+  // function pressConPosicion(i: number) {
+  //   function pressReal() {
+  //     alert(`PRESS ${i}`);
+  //   }
+  //   return pressReal;
+  // }
+
+  // function pressConPosicion(i: number) {
+  //   return function pressReal() {
+  //     alert(`PRESS ${i}`);
+  //   }
+  // }
+
+  // function pressConPosicion(i: number) {
+  //   return () => {
+  //     alert(`PRESS ${i}`);
+  //   };
+  // }
+
+  // const pressConPosicion = (i: number) => {
+  //   return () => {
+  //     alert(`PRESS ${i}`);
+  //   };
+  // };
+
+  const pressConPosicion = (i: number) => () => alert(`PRESS ${i}`);
+
   // Vista
   return (
     <View style={[styles.container, fondo ? { backgroundColor: "red" } : null]}>
+      <Pressable onPressIn={pressIn} onPress={press} onPressOut={pressOUt}>
+        <View style={{ width: 100, height: 100, backgroundColor: "green" }}>
+          <Text>Hola</Text>
+        </View>
+      </Pressable>
+
+      <TouchableOpacity onPress={press}>
+        <View style={{ width: 100, height: 100, backgroundColor: "green" }}>
+          <Text>Hola</Text>
+        </View>
+      </TouchableOpacity>
+      <Button title="BOTON NATIVO" onPress={() => alert("Hola")} />
       <View
         style={{
           flexDirection: "row",
@@ -34,7 +99,9 @@ export default function RootLayout() {
       </View>
       <SeccionScrolleable titulo="Rojos">
         {Array.from({ length: 10 }, (_, i) => (
-          <Cuadrado key={i} />
+          <Pressable key={i} onPress={pressConPosicion(i)}>
+            <Cuadrado key={i} />
+          </Pressable>
         ))}
       </SeccionScrolleable>
       <SeccionScrolleable titulo="Verdes" hideTitle>
