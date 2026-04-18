@@ -42,6 +42,19 @@ export default function IndexScreen() {
           <Text style={{ fontSize: 30 }}>FORM </Text>
         </View>
       </Pressable>
+      <Pressable onPress={() => router.push("/ficha/123")}>
+        <View
+          style={{
+            width: 100,
+            height: 100,
+            backgroundColor: "lightblue",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontSize: 30 }}>ALI 123</Text>
+        </View>
+      </Pressable>
       <Link href="/alimento">ALIMENTO</Link>
     </View>
   );
