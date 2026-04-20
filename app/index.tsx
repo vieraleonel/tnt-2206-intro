@@ -1,71 +1,197 @@
-import { Link, useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ROUTES } from "@/src/navigation/routes";
+import { useRouter } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import "react-native-reanimated";
+
+const categorias: string[] = [
+  "beverages",
+  "dairies",
+  "snacks",
+  "breakfasts",
+  "desserts",
+  "chocolates",
+  "biscuits-and-cakes",
+  "cereals-and-potatoes",
+  "meals",
+  "plant-based-foods",
+];
+
+const marcas: string[] = [
+  "nestle",
+  "coca-cola",
+  "pepsi",
+  "danone",
+  "kelloggs",
+  "unilever",
+  "mondelez",
+  "mars",
+  "ferrero",
+  "lactalis",
+];
+
+const etiquetas: string[] = [
+  "organic",
+  "vegan",
+  "vegetarian",
+  "gluten-free",
+  "no-added-sugar",
+  "fair-trade",
+  "lactose-free",
+  "palm-oil-free",
+  "high-fiber",
+  "low-fat",
+];
 
 export default function IndexScreen() {
   const router = useRouter();
 
   const navToAlimento = () => {
-    router.push("/alimento");
+    router.push(ROUTES.ALIMENTO);
   };
 
   const navToFormulario1 = () => {
-    router.push("/formulario/paso1");
+    router.push(ROUTES.FORMULARIO_PASO_1);
+  };
+
+  const navToTabsDemo = () => {
+    router.push(ROUTES.TABS);
   };
 
   // Vista
   return (
-    <View style={styles.container}>
-      <Pressable onPress={navToAlimento}>
-        <View
-          style={{
-            width: 100,
-            height: 100,
-            backgroundColor: "green",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.quickActions}>
+        <Pressable
+          onPress={navToAlimento}
+          style={[styles.card, styles.greenCard]}
         >
-          <Text style={{ fontSize: 30 }}>ALIMENTO</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={navToFormulario1}>
-        <View
-          style={{
-            width: 100,
-            height: 100,
-            backgroundColor: "lightblue",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          <Text style={styles.cardText}>ALIMENTO</Text>
+        </Pressable>
+        <Pressable
+          onPress={navToFormulario1}
+          style={[styles.card, styles.blueCard]}
         >
-          <Text style={{ fontSize: 30 }}>FORM </Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => router.push("/ficha/123")}>
-        <View
-          style={{
-            width: 100,
-            height: 100,
-            backgroundColor: "lightblue",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          <Text style={styles.cardText}>FORM</Text>
+        </Pressable>
+        <Pressable
+          onPress={() =>
+            router.push({ pathname: ROUTES.FICHA, params: { id: "123" } })
+          }
+          style={[styles.card, styles.blueCard]}
         >
-          <Text style={{ fontSize: 30 }}>ALI 123</Text>
-        </View>
-      </Pressable>
-      <Link href="/alimento">ALIMENTO</Link>
-    </View>
+          <Text style={styles.cardText}>ALI 123</Text>
+        </Pressable>
+        <Pressable
+          onPress={navToTabsDemo}
+          style={[styles.card, styles.orangeCard]}
+        >
+          <Text style={styles.cardText}>TABS</Text>
+        </Pressable>
+      </View>
+
+      <SeccionList title="Categorias" items={categorias} type="categorias" />
+      <SeccionList title="Marcas" items={marcas} type="marcas" />
+      <SeccionList title="Etiquetas" items={etiquetas} type="etiquetas" />
+    </ScrollView>
   );
 }
+
+type SectionListProps = {
+  title: string;
+  items: string[];
+  type: "categorias" | "marcas" | "etiquetas";
+};
+const SeccionList = ({ title, items, type }: SectionListProps) => {
+  const router = useRouter();
+
+  const navToListItem = (item: string) => {
+    const pathname =
+      type === "categorias"
+        ? ROUTES.CATEGORIA
+        : type === "marcas"
+          ? ROUTES.MARCA
+          : ROUTES.ETIQUETA;
+    router.push({
+      pathname: pathname,
+      params: { nombre: item },
+    });
+  };
+
+  return (
+    <View style={styles.listBlock}>
+      <Text style={styles.listTitle}>{title}</Text>
+      <View style={styles.itemsContainer}>
+        {items.map((item) => (
+          <Pressable
+            key={item}
+            onPress={() => navToListItem(item)}
+            style={styles.itemButton}
+          >
+            <Text style={styles.itemText}>{item}</Text>
+          </Pressable>
+        ))}
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    gap: 20,
+    paddingVertical: 32,
+    paddingHorizontal: 16,
+  },
+  quickActions: {
+    width: "100%",
+    alignItems: "center",
     gap: 10,
-    flex: 1,
+  },
+  card: {
+    width: 180,
+    minHeight: 90,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 12,
+  },
+  greenCard: {
+    backgroundColor: "green",
+  },
+  blueCard: {
+    backgroundColor: "lightblue",
+  },
+  orangeCard: {
+    backgroundColor: "#f59e0b",
+  },
+  cardText: {
+    fontSize: 24,
+    fontWeight: "700",
+  },
+  listBlock: {
+    width: "100%",
+    maxWidth: 420,
+    gap: 12,
+  },
+  listTitle: {
+    fontSize: 24,
+    fontWeight: "700",
+  },
+  itemsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  itemButton: {
+    backgroundColor: "#f0f4f8",
+    borderWidth: 1,
+    borderColor: "#cbd5e1",
+    borderRadius: 999,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+  },
+  itemText: {
+    fontSize: 16,
   },
 });

@@ -7,6 +7,7 @@ type FichaScreenParams = {
 };
 export default function FichaScreen() {
   const { id } = useLocalSearchParams<FichaScreenParams>();
+  console.log("ID: ", id);
 
   // Vista
   return (
