@@ -1,3 +1,5 @@
+import { Href } from "expo-router";
+
 export const ROUTES = {
   HOME: "/",
   ALIMENTO: "/alimento",
@@ -10,3 +12,19 @@ export const ROUTES = {
   TABS: "/tabs-demo",
   TABS_FAVS: "/tabs-demo/favoritos",
 } as const;
+
+// Este tipo se construye tomando el objeto ROUTES, obteniendo sus claves con `keyof`
+// y luego usando esas claves para formar la union de todos sus valores literales.
+export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];
+type RouteParams = Record<string, string | number | boolean | undefined>;
+
+export const buildRoute = (route: AppRoute, params?: RouteParams): Href => {
+  if (!params) {
+    return route as Href;
+  }
+
+  return {
+    pathname: route,
+    params,
+  } as Href;
+};

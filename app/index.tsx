@@ -1,4 +1,4 @@
-import { ROUTES } from "@/src/navigation/routes";
+import { AppRoute, buildRoute, ROUTES } from "@/src/navigation/routes";
 import { useRouter } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import "react-native-reanimated";
@@ -46,15 +46,15 @@ export default function IndexScreen() {
   const router = useRouter();
 
   const navToAlimento = () => {
-    router.push(ROUTES.ALIMENTO);
+    router.push(buildRoute(ROUTES.ALIMENTO));
   };
 
   const navToFormulario1 = () => {
-    router.push(ROUTES.FORMULARIO_PASO_1);
+    router.push(buildRoute(ROUTES.FORMULARIO_PASO_1));
   };
 
   const navToTabsDemo = () => {
-    router.push(ROUTES.TABS);
+    router.push(buildRoute(ROUTES.TABS));
   };
 
   // Vista
@@ -74,9 +74,7 @@ export default function IndexScreen() {
           <Text style={styles.cardText}>FORM</Text>
         </Pressable>
         <Pressable
-          onPress={() =>
-            router.push({ pathname: ROUTES.FICHA, params: { id: "123" } })
-          }
+          onPress={() => router.push(buildRoute(ROUTES.FICHA, { id: "123" }))}
           style={[styles.card, styles.blueCard]}
         >
           <Text style={styles.cardText}>ALI 123</Text>
@@ -91,7 +89,11 @@ export default function IndexScreen() {
 
       <SeccionList title="Categorias" items={categorias} type="categorias" />
       <SeccionList title="Marcas" items={marcas} type="marcas" />
-      <SeccionList title="Etiquetas" items={etiquetas} type="etiquetas" />
+      <SeccionList2
+        title="Etiquetas"
+        items={etiquetas}
+        route={ROUTES.ETIQUETA}
+      />
     </ScrollView>
   );
 }
@@ -111,10 +113,37 @@ const SeccionList = ({ title, items, type }: SectionListProps) => {
         : type === "marcas"
           ? ROUTES.MARCA
           : ROUTES.ETIQUETA;
-    router.push({
-      pathname: pathname,
-      params: { nombre: item },
-    });
+    router.push(buildRoute(pathname, { nombre: item }));
+  };
+
+  return (
+    <View style={styles.listBlock}>
+      <Text style={styles.listTitle}>{title}</Text>
+      <View style={styles.itemsContainer}>
+        {items.map((item) => (
+          <Pressable
+            key={item}
+            onPress={() => navToListItem(item)}
+            style={styles.itemButton}
+          >
+            <Text style={styles.itemText}>{item}</Text>
+          </Pressable>
+        ))}
+      </View>
+    </View>
+  );
+};
+
+type SectionList2Props = {
+  title: string;
+  items: string[];
+  route: AppRoute;
+};
+const SeccionList2 = ({ title, items, route }: SectionList2Props) => {
+  const router = useRouter();
+
+  const navToListItem = (item: string) => {
+    router.push(buildRoute(route, { nombre: item }));
   };
 
   return (
