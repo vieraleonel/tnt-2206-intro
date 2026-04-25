@@ -12,7 +12,11 @@ export default function FichaScreen() {
   // Vista
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ headerTitle: id }} />
+      <Stack.Screen
+        options={{
+          headerTitle: id,
+        }}
+      />
       <Text style={{ fontSize: 30 }}>FICHA {id}</Text>
     </View>
   );

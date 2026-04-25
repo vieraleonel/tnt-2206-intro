@@ -1,4 +1,9 @@
-import { AppRoute, buildRoute, ROUTES } from "@/src/navigation/routes";
+import {
+  AppRoute,
+  buildRoute,
+  fichaShowRoute,
+  ROUTES,
+} from "@/src/navigation/routes";
 import { useRouter } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import "react-native-reanimated";
@@ -53,8 +58,8 @@ export default function IndexScreen() {
     router.push(buildRoute(ROUTES.FORMULARIO_PASO_1));
   };
 
-  const navToTabsDemo = () => {
-    router.push(buildRoute(ROUTES.TABS));
+  const navToFavoritos = () => {
+    router.push(buildRoute(ROUTES.TABS_FAVS));
   };
 
   // Vista
@@ -62,7 +67,8 @@ export default function IndexScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.quickActions}>
         <Pressable
-          onPress={navToAlimento}
+          //onPress={navToAlimento}
+          onPress={() => router.push("/_sitemap")}
           style={[styles.card, styles.greenCard]}
         >
           <Text style={styles.cardText}>ALIMENTO</Text>
@@ -74,16 +80,16 @@ export default function IndexScreen() {
           <Text style={styles.cardText}>FORM</Text>
         </Pressable>
         <Pressable
-          onPress={() => router.push(buildRoute(ROUTES.FICHA, { id: "123" }))}
+          onPress={() => router.push(fichaShowRoute(123))}
           style={[styles.card, styles.blueCard]}
         >
           <Text style={styles.cardText}>ALI 123</Text>
         </Pressable>
         <Pressable
-          onPress={navToTabsDemo}
+          onPress={navToFavoritos}
           style={[styles.card, styles.orangeCard]}
         >
-          <Text style={styles.cardText}>TABS</Text>
+          <Text style={styles.cardText}>FAVS</Text>
         </Pressable>
       </View>
 
@@ -113,7 +119,7 @@ const SeccionList = ({ title, items, type }: SectionListProps) => {
         : type === "marcas"
           ? ROUTES.MARCA
           : ROUTES.ETIQUETA;
-    router.push(buildRoute(pathname, { nombre: item }));
+    router.push({ pathname: pathname, params: { nombre: item } });
   };
 
   return (

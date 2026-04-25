@@ -1,7 +1,8 @@
 import { Href } from "expo-router";
 
 export const ROUTES = {
-  HOME: "/",
+  HOME: "/", // /(tabs)/index
+  MAIN_TABS: "/(tabs)",
   ALIMENTO: "/alimento",
   FORMULARIO_PASO_1: "/formulario/paso1",
   FORMULARIOPASO2: "/formulario/paso2",
@@ -9,8 +10,8 @@ export const ROUTES = {
   MARCA: "/marcas/[nombre]",
   ETIQUETA: "/etiquetas/[nombre]",
   FICHA: "/ficha/[id]",
-  TABS: "/tabs-demo",
-  TABS_FAVS: "/tabs-demo/favoritos",
+  TABS: "/",
+  TABS_FAVS: "/favoritos",
 } as const;
 
 // Este tipo se construye tomando el objeto ROUTES, obteniendo sus claves con `keyof`
@@ -28,3 +29,7 @@ export const buildRoute = (route: AppRoute, params?: RouteParams): Href => {
     params,
   } as Href;
 };
+
+export function fichaShowRoute(id: number) {
+  return buildRoute(ROUTES.FICHA, { id: id.toString() });
+}
