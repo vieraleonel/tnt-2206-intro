@@ -1,3 +1,4 @@
+import { ROUTES } from "@/src/navigation/routes";
 import { Link, useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -5,7 +6,7 @@ export default function FormularioPaso1Screen() {
   const router = useRouter();
 
   const navToIndex = () => {
-    router.back();
+    router.dismissTo(ROUTES.TABS_CLASES);
   };
 
   // Vista

@@ -19,6 +19,14 @@ export default function RootLayout() {
           tabBarLabel: "Favoritos",
         }}
       />
+      <Tabs.Screen
+        name="clases"
+        options={{
+          title: "Clases",
+          headerTitle: "Clases",
+          tabBarLabel: "Clases",
+        }}
+      />
     </Tabs>
   );
 }

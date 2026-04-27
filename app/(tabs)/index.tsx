@@ -1,9 +1,4 @@
-import {
-  AppRoute,
-  buildRoute,
-  fichaShowRoute,
-  ROUTES,
-} from "@/src/navigation/routes";
+import { AppRoute, buildRoute, ROUTES } from "@/src/navigation/routes";
 import { useRouter } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import "react-native-reanimated";
@@ -48,51 +43,8 @@ const etiquetas: string[] = [
 ];
 
 export default function IndexScreen() {
-  const router = useRouter();
-
-  const navToAlimento = () => {
-    router.push(buildRoute(ROUTES.ALIMENTO));
-  };
-
-  const navToFormulario1 = () => {
-    router.push(buildRoute(ROUTES.FORMULARIO_PASO_1));
-  };
-
-  const navToFavoritos = () => {
-    router.push(buildRoute(ROUTES.TABS_FAVS));
-  };
-
-  // Vista
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.quickActions}>
-        <Pressable
-          //onPress={navToAlimento}
-          onPress={() => router.push("/_sitemap")}
-          style={[styles.card, styles.greenCard]}
-        >
-          <Text style={styles.cardText}>ALIMENTO</Text>
-        </Pressable>
-        <Pressable
-          onPress={navToFormulario1}
-          style={[styles.card, styles.blueCard]}
-        >
-          <Text style={styles.cardText}>FORM</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => router.push(fichaShowRoute(123))}
-          style={[styles.card, styles.blueCard]}
-        >
-          <Text style={styles.cardText}>ALI 123</Text>
-        </Pressable>
-        <Pressable
-          onPress={navToFavoritos}
-          style={[styles.card, styles.orangeCard]}
-        >
-          <Text style={styles.cardText}>FAVS</Text>
-        </Pressable>
-      </View>
-
       <SeccionList title="Categorias" items={categorias} type="categorias" />
       <SeccionList title="Marcas" items={marcas} type="marcas" />
       <SeccionList2

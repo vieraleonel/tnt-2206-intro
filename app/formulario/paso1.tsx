@@ -1,3 +1,4 @@
+import { ROUTES } from "@/src/navigation/routes";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -5,7 +6,7 @@ export default function FormularioPaso1Screen() {
   const router = useRouter();
 
   const navToPaso2 = () => {
-    router.replace("/formulario/paso2");
+    router.replace(ROUTES.FORMULARIO_PASO_2);
   };
 
   // Vista
