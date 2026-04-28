@@ -1,53 +1,21 @@
+import { categorias } from "@/src/data/categorias";
+import { etiquetas } from "@/src/data/etiquetas";
+import { marcas } from "@/src/data/marcas";
 import { AppRoute, buildRoute, ROUTES } from "@/src/navigation/routes";
 import { useRouter } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import "react-native-reanimated";
 
-const categorias: string[] = [
-  "beverages",
-  "dairies",
-  "snacks",
-  "breakfasts",
-  "desserts",
-  "chocolates",
-  "biscuits-and-cakes",
-  "cereals-and-potatoes",
-  "meals",
-  "plant-based-foods",
-];
-
-const marcas: string[] = [
-  "nestle",
-  "coca-cola",
-  "pepsi",
-  "danone",
-  "kelloggs",
-  "unilever",
-  "mondelez",
-  "mars",
-  "ferrero",
-  "lactalis",
-];
-
-const etiquetas: string[] = [
-  "organic",
-  "vegan",
-  "vegetarian",
-  "gluten-free",
-  "no-added-sugar",
-  "fair-trade",
-  "lactose-free",
-  "palm-oil-free",
-  "high-fiber",
-  "low-fat",
-];
-
 export default function IndexScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <SeccionList title="Categorias" items={categorias} type="categorias" />
-      <SeccionList title="Marcas" items={marcas} type="marcas" />
-      <SeccionList2
+      <SeccionList
+        title="Categorias"
+        items={categorias}
+        route={ROUTES.CATEGORIA}
+      />
+      <SeccionList title="Marcas" items={marcas} route={ROUTES.MARCA} />
+      <SeccionList
         title="Etiquetas"
         items={etiquetas}
         route={ROUTES.ETIQUETA}
@@ -56,52 +24,21 @@ export default function IndexScreen() {
   );
 }
 
+type ListItem = {
+  id: string;
+  nombre: string;
+};
+
 type SectionListProps = {
   title: string;
-  items: string[];
-  type: "categorias" | "marcas" | "etiquetas";
-};
-const SeccionList = ({ title, items, type }: SectionListProps) => {
-  const router = useRouter();
-
-  const navToListItem = (item: string) => {
-    const pathname =
-      type === "categorias"
-        ? ROUTES.CATEGORIA
-        : type === "marcas"
-          ? ROUTES.MARCA
-          : ROUTES.ETIQUETA;
-    router.push({ pathname: pathname, params: { nombre: item } });
-  };
-
-  return (
-    <View style={styles.listBlock}>
-      <Text style={styles.listTitle}>{title}</Text>
-      <View style={styles.itemsContainer}>
-        {items.map((item) => (
-          <Pressable
-            key={item}
-            onPress={() => navToListItem(item)}
-            style={styles.itemButton}
-          >
-            <Text style={styles.itemText}>{item}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </View>
-  );
-};
-
-type SectionList2Props = {
-  title: string;
-  items: string[];
+  items: ListItem[];
   route: AppRoute;
 };
-const SeccionList2 = ({ title, items, route }: SectionList2Props) => {
+const SeccionList = ({ title, items, route }: SectionListProps) => {
   const router = useRouter();
 
-  const navToListItem = (item: string) => {
-    router.push(buildRoute(route, { nombre: item }));
+  const navToListItem = (item: ListItem) => {
+    router.push(buildRoute(route, { nombre: item.id }));
   };
 
   return (
@@ -110,11 +47,11 @@ const SeccionList2 = ({ title, items, route }: SectionList2Props) => {
       <View style={styles.itemsContainer}>
         {items.map((item) => (
           <Pressable
-            key={item}
+            key={item.id}
             onPress={() => navToListItem(item)}
             style={styles.itemButton}
           >
-            <Text style={styles.itemText}>{item}</Text>
+            <Text style={styles.itemText}>{item.nombre}</Text>
           </Pressable>
         ))}
       </View>
@@ -130,31 +67,6 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingVertical: 32,
     paddingHorizontal: 16,
-  },
-  quickActions: {
-    width: "100%",
-    alignItems: "center",
-    gap: 10,
-  },
-  card: {
-    width: 180,
-    minHeight: 90,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 12,
-  },
-  greenCard: {
-    backgroundColor: "green",
-  },
-  blueCard: {
-    backgroundColor: "lightblue",
-  },
-  orangeCard: {
-    backgroundColor: "#f59e0b",
-  },
-  cardText: {
-    fontSize: 24,
-    fontWeight: "700",
   },
   listBlock: {
     width: "100%",

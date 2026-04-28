@@ -1,4 +1,5 @@
 import { buildRoute, fichaShowRoute, ROUTES } from "@/src/navigation/routes";
+import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -32,7 +33,17 @@ export default function ClasesTabScreeen() {
           onPress={() => router.push(fichaShowRoute(123))}
           style={[styles.card, styles.blueCard]}
         >
-          <Text style={styles.cardText}>Ficha 123</Text>
+          <Text style={styles.cardText}>
+            <AntDesign name="file-done" size={24} color="black" />
+            {" Ficha 123"}
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={() => router.push(ROUTES.LISTA_FLATLIST)}
+          style={[styles.card, styles.blueCard]}
+        >
+          <Text style={styles.cardText}>Flatlist</Text>
+        </Pressable>
         </Pressable>
       </View>
     </View>

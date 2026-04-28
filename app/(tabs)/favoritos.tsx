@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function FavoritosScreen() {
   const router = useRouter();
@@ -10,12 +10,7 @@ export default function FavoritosScreen() {
         Este es el segundo tab para mostrar una navegacion basica con tabs.
       </Text>
 
-      <Pressable
-        //onPress={navToAlimento}
-        onPress={() => router.push("/ficha/123")}
-      >
-        <Text>ALIMENTO</Text>
-      </Pressable>
+      <Button title="SITEMAP" onPress={() => router.push("/_sitemap")} />
     </View>
   );
 }

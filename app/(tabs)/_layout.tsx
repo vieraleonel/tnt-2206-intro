@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
 export default function RootLayout() {
@@ -9,6 +10,15 @@ export default function RootLayout() {
           title: "Inicio",
           headerTitle: "Inicio",
           tabBarLabel: "Inicio",
+          tabBarActiveTintColor: "red",
+          tabBarInactiveTintColor: "green",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
       <Tabs.Screen
@@ -17,6 +27,13 @@ export default function RootLayout() {
           title: "Favoritos",
           headerTitle: "Favoritos",
           tabBarLabel: "Favoritos",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "heart" : "heart-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
       <Tabs.Screen
@@ -25,6 +42,13 @@ export default function RootLayout() {
           title: "Clases",
           headerTitle: "Clases",
           tabBarLabel: "Clases",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "grid" : "grid-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
     </Tabs>

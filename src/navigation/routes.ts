@@ -11,6 +11,8 @@ export const ROUTES = {
   MARCA: "/marcas/[nombre]",
   ETIQUETA: "/etiquetas/[nombre]",
   FICHA: "/ficha/[id]",
+  LISTA_FLATLIST: "/ejemplos/lista-flatlist",
+  SIMPLE_STATE: "/ejemplos/simple-state",
 } as const;
 
 // Este tipo se construye tomando el objeto ROUTES, obteniendo sus claves con `keyof`
