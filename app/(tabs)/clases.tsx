@@ -44,6 +44,11 @@ export default function ClasesTabScreeen() {
         >
           <Text style={styles.cardText}>Flatlist</Text>
         </Pressable>
+        <Pressable
+          onPress={() => router.push(ROUTES.SIMPLE_STATE)}
+          style={[styles.card, styles.blueCard]}
+        >
+          <Text style={styles.cardText}>Simple State</Text>
         </Pressable>
       </View>
     </View>
