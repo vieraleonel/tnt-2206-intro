@@ -50,6 +50,12 @@ export default function ClasesTabScreeen() {
         >
           <Text style={styles.cardText}>Simple State</Text>
         </Pressable>
+        <Pressable
+          onPress={() => router.push(ROUTES.INPUT_FILTER)}
+          style={[styles.card, styles.blueCard]}
+        >
+          <Text style={styles.cardText}>Input Filter</Text>
+        </Pressable>
       </View>
     </View>
   );

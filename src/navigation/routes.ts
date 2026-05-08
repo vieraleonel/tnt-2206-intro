@@ -13,6 +13,7 @@ export const ROUTES = {
   FICHA: "/ficha/[id]",
   LISTA_FLATLIST: "/ejemplos/lista-flatlist",
   SIMPLE_STATE: "/ejemplos/simple-state",
+  INPUT_FILTER: "/ejemplos/input-filter",
 } as const;
 
 // Este tipo se construye tomando el objeto ROUTES, obteniendo sus claves con `keyof`

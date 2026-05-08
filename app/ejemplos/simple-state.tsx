@@ -12,7 +12,13 @@ const arreglo = [1, 200];
 export default function SimpleStateScreen() {
   //console.log("STATE: ", state);
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Text style={{ fontSize: 36 }}>3x4 =</Text>
       <Calcular />
     </View>
