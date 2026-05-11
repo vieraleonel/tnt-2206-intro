@@ -14,6 +14,7 @@ export const ROUTES = {
   LISTA_FLATLIST: "/ejemplos/lista-flatlist",
   SIMPLE_STATE: "/ejemplos/simple-state",
   INPUT_FILTER: "/ejemplos/input-filter",
+  FETCH_INDEX: "/ejemplos/fetch",
 } as const;
 
 // Este tipo se construye tomando el objeto ROUTES, obteniendo sus claves con `keyof`

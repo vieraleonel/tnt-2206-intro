@@ -1,7 +1,7 @@
 import { buildRoute, fichaShowRoute, ROUTES } from "@/src/navigation/routes";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
 
 export default function ClasesTabScreeen() {
   const router = useRouter();
@@ -15,8 +15,7 @@ export default function ClasesTabScreeen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.quickActions}>
+    <ScrollView contentContainerStyle={styles.container}>
         <Pressable
           onPress={navToAlimento}
           style={[styles.card, styles.greenCard]}
@@ -56,17 +55,27 @@ export default function ClasesTabScreeen() {
         >
           <Text style={styles.cardText}>Input Filter</Text>
         </Pressable>
-      </View>
-    </View>
+      <Pressable
+        onPress={() => router.push(ROUTES.FORMULARIO_EJEMPLO)}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>Inputs formulario</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => router.push(ROUTES.FETCH_INDEX)}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>Fetch</Text>
+      </Pressable>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 24,
+    paddingVertical: 60,
     gap: 12,
     backgroundColor: "#eff6ff",
   },

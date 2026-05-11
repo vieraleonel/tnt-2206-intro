@@ -3,10 +3,62 @@ import { etiquetas } from "@/src/data/etiquetas";
 import { marcas } from "@/src/data/marcas";
 import { AppRoute, buildRoute, ROUTES } from "@/src/navigation/routes";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import "react-native-reanimated";
 
+async function llamarApi() {
+  try {
+    const respuesta = await fetch("http://localhost:8080/categorias.json");
+    if (!respuesta.ok) {
+      throw new Error("Error en la respuesta: " + respuesta.status);
+    }
+    const data = await respuesta.json();
+    return data;
+  } catch (error) {
+    console.error("Error en la llamada a la API:", error);
+  } finally {
+    console.warn("Llamada a la API finalizada");
+  }
+
+  // fetch("http://localhost:8080/categorias.json")
+  //   .then((response) => {
+  //     if (!response.ok) {
+  //       throw new Error("Error en la respuesta: " + response.status);
+  //     }
+  //     return response.json();
+  //   })
+  //   .then((data) => console.log("Datos procesados:", data))
+  //   .catch((error) => console.log("Error:", error))
+  //   .finally(() => console.log("Fetch finalizado"));
+
+  // const promesa = fetch("http://localhost:8080/categorias.json");
+  // promesa.then(function (response) {
+  //   console.log("Respuesta recibida");
+
+  //   if (!response.ok) {
+  //     throw new Error("Error en la respuesta: " + response.status);
+  //   }
+  //   return response.json();
+  // })
+  // .then(function (data) {
+  //   console.log("Datos procesados:", data);
+  // })
+  // .catch(function (error) {
+  //   console.log("GENRAL Error:", error);
+  // });
+}
+
 export default function IndexScreen() {
+  const [data, setData] = useState("");
+
+  // useEffect(() => {
+  //   llamarApi().then((data) => {
+  //     if (data) {
+  //       setData(JSON.stringify(data));
+  //     }
+  //   });
+  // }, []);
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <SeccionList
@@ -14,6 +66,7 @@ export default function IndexScreen() {
         items={categorias}
         route={ROUTES.CATEGORIA}
       />
+      <Text>{data}</Text>
       <SeccionList title="Marcas" items={marcas} route={ROUTES.MARCA} />
       <SeccionList
         title="Etiquetas"
@@ -34,6 +87,7 @@ type SectionListProps = {
   items: ListItem[];
   route: AppRoute;
 };
+
 const SeccionList = ({ title, items, route }: SectionListProps) => {
   const router = useRouter();
 
