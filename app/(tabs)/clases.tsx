@@ -67,6 +67,12 @@ export default function ClasesTabScreeen() {
       >
         <Text style={styles.cardText}>Fetch</Text>
       </Pressable>
+      <Pressable
+        onPress={() => router.push(ROUTES.IMAGEN_GRADIENTE)}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>Imagen Gradientes</Text>
+      </Pressable>
     </ScrollView>
   );
 }
