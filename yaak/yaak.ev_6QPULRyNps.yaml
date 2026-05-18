@@ -1,0 +1,18 @@
+type: environment
+model: environment
+id: ev_6QPULRyNps
+workspaceId: wk_xQLyVQy253
+createdAt: 2026-05-18T21:39:27.413287
+updatedAt: 2026-05-18T21:40:40.181043
+name: Production
+public: true
+base: false
+parentModel: environment
+parentId: null
+variables:
+- enabled: true
+  name: BASE_URL
+  value: https://world.openfoodfacts.org
+  id: Qkn2G7aHjf
+color: var(--danger)
+sortPriority: 0.0

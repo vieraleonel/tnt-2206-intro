@@ -1,0 +1,26 @@
+type: http_request
+model: http_request
+id: rq_aS34QxQE2d
+createdAt: 2026-05-18T21:52:45.035311
+updatedAt: 2026-05-18T21:53:35.928755
+workspaceId: wk_xQLyVQy253
+folderId: fl_dK7GJiNgiP
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: Info de un producto
+sortPriority: 0.001
+url: ${[ BASE_URL ]}/api/v3/product/:code
+urlParameters:
+- enabled: true
+  name: :code
+  value: '3017620422003'
+  id: dCMCX5KTVF
+- enabled: true
+  name: ''
+  value: ''
+  id: XjndUIiyDN

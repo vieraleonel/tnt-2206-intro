@@ -1,0 +1,38 @@
+type: http_request
+model: http_request
+id: rq_FTP3jdnAUT
+createdAt: 2026-05-18T21:02:32.409365
+updatedAt: 2026-05-18T21:48:32.853407
+workspaceId: wk_xQLyVQy253
+folderId: fl_dK7GJiNgiP
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: Buscar taxonomías
+sortPriority: 0.0
+url: ${[ BASE_URL ]}/api/v3/taxonomy_suggestions
+urlParameters:
+- enabled: true
+  name: string
+  value: Beverages
+  id: bZ8nmExynW
+- enabled: true
+  name: tagtype
+  value: categories
+  id: 4yhYdM8ymk
+- enabled: true
+  name: lc
+  value: en
+  id: z8dZX7djtr
+- enabled: true
+  name: limit
+  value: '20'
+  id: HyIARKQic3
+- enabled: true
+  name: ''
+  value: ''
+  id: ARVEuhPj9g
