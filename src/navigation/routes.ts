@@ -16,6 +16,7 @@ export const ROUTES = {
   INPUT_FILTER: "/ejemplos/input-filter",
   FETCH_INDEX: "/ejemplos/fetch",
   IMAGEN_GRADIENTE: "/ejemplos/imagen-gradientes",
+  PRODUCTO: "/productos/[id]",
 } as const;
 
 // Este tipo se construye tomando el objeto ROUTES, obteniendo sus claves con `keyof`

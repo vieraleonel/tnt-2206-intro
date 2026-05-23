@@ -1,7 +1,8 @@
 export async function searchProducts(
   categorias: string,
 ): Promise<ProductSearchResponse> {
-  const url = "https://world.openfoodfacts.org/api/v2/search";
+  const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+  const url = `${BASE_URL}/v2/search`;
   const params = new URLSearchParams({
     // brands_tags: "ferrero",
     categories_tags: categorias,
