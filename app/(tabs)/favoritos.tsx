@@ -1,8 +1,13 @@
+import { FAVORITOS_HOOK_KEY, useFavoritos } from "@/src/hooks/useFavoritos";
+import { useRefreshOnFocus } from "@/src/hooks/useRefreshOnFocus";
 import { useRouter } from "expo-router";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 
 export default function FavoritosScreen() {
   const router = useRouter();
+  useRefreshOnFocus(FAVORITOS_HOOK_KEY);
+  const { data } = useFavoritos();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Favoritos</Text>
@@ -11,6 +16,18 @@ export default function FavoritosScreen() {
       </Text>
 
       <Button title="SITEMAP" onPress={() => router.push("/_sitemap")} />
+
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View
+            style={{ padding: 10, borderBottomWidth: 1, borderColor: "#ccc" }}
+          >
+            <Text style={{ fontSize: 18 }}>{item.nombre}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 }
