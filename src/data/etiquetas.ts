@@ -4,14 +4,14 @@ export type Etiqueta = {
 };
 
 export const etiquetas: Etiqueta[] = [
-  { id: "organic", nombre: "organic" },
-  { id: "vegan", nombre: "vegan" },
-  { id: "vegetarian", nombre: "vegetarian" },
-  { id: "gluten-free", nombre: "gluten-free" },
-  { id: "no-added-sugar", nombre: "no-added-sugar" },
-  { id: "fair-trade", nombre: "fair-trade" },
-  { id: "lactose-free", nombre: "lactose-free" },
-  { id: "palm-oil-free", nombre: "palm-oil-free" },
-  { id: "high-fiber", nombre: "high-fiber" },
-  { id: "low-fat", nombre: "low-fat" },
+  { id: "organic", nombre: "Orgánico" },
+  { id: "vegan", nombre: "Vegano" },
+  { id: "vegetarian", nombre: "Vegetariano" },
+  { id: "gluten-free", nombre: "Sin Gluten" },
+  { id: "no-added-sugar", nombre: "Sin Azúcar Agregado" },
+  { id: "fair-trade", nombre: "Comercio Justo" },
+  { id: "lactose-free", nombre: "Sin Lactosa" },
+  { id: "palm-oil-free", nombre: "Sin Aceite de Palma" },
+  { id: "high-fiber", nombre: "Alto en Fibra" },
+  { id: "low-fat", nombre: "Bajo en Grasa" },
 ];

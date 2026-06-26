@@ -16,45 +16,66 @@ export default function ClasesTabScreeen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-        <Pressable
-          onPress={navToAlimento}
-          style={[styles.card, styles.greenCard]}
-        >
-          <Text style={styles.cardText}>Ruta no existe</Text>
-        </Pressable>
-        <Pressable
-          onPress={navToFormulario1}
-          style={[styles.card, styles.blueCard]}
-        >
-          <Text style={styles.cardText}>Formulario c/pasos</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => router.push(fichaShowRoute(123))}
-          style={[styles.card, styles.blueCard]}
-        >
-          <Text style={styles.cardText}>
-            <AntDesign name="file-done" size={24} color="black" />
-            {" Ficha 123"}
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => router.push(ROUTES.LISTA_FLATLIST)}
-          style={[styles.card, styles.blueCard]}
-        >
-          <Text style={styles.cardText}>Flatlist</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => router.push(ROUTES.SIMPLE_STATE)}
-          style={[styles.card, styles.blueCard]}
-        >
-          <Text style={styles.cardText}>Simple State</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => router.push(ROUTES.INPUT_FILTER)}
-          style={[styles.card, styles.blueCard]}
-        >
-          <Text style={styles.cardText}>Input Filter</Text>
-        </Pressable>
+      <Pressable
+        onPress={navToAlimento}
+        style={[styles.card, styles.greenCard]}
+      >
+        <Text style={styles.cardText}>Ruta no existe</Text>
+      </Pressable>
+
+      <Pressable
+        onPress={() => router.push(ROUTES.CAMARA)}
+        style={[styles.card, styles.greenCard]}
+      >
+        <Text style={styles.cardText}>CAMARA</Text>
+      </Pressable>
+      <Pressable
+        onPress={navToFormulario1}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>Formulario c/pasos</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => router.push(fichaShowRoute(123))}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>
+          <AntDesign name="file-done" size={24} color="black" />
+          {" Ficha 123"}
+        </Text>
+      </Pressable>
+      <Pressable
+        onPress={() => router.push(ROUTES.LISTA_FLATLIST)}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>Flatlist</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => router.push(ROUTES.SIMPLE_STATE)}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>Simple State</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => router.push(ROUTES.FORMULARIO_EJEMPLO)}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>Inputs formulario</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => router.push(ROUTES.CONTROLADOS_VS_NOCONTROLADOS)}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={[styles.cardText, styles.blueCard]}>
+          Controlados vs no controlados
+        </Text>
+      </Pressable>
+      <Pressable
+        onPress={() => router.push(ROUTES.INPUT_FILTER)}
+        style={[styles.card, styles.blueCard]}
+      >
+        <Text style={styles.cardText}>Input Filter</Text>
+      </Pressable>
       <Pressable
         onPress={() => router.push(ROUTES.FORMULARIO_EJEMPLO)}
         style={[styles.card, styles.blueCard]}

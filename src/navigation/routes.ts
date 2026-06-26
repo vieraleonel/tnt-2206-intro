@@ -16,6 +16,7 @@ export const ROUTES = {
   INPUT_FILTER: "/ejemplos/input-filter",
   FETCH_INDEX: "/ejemplos/fetch",
   IMAGEN_GRADIENTE: "/ejemplos/imagen-gradientes",
+  CAMARA: "/ejemplos/camara",
   PRODUCTO: "/productos/[id]",
 } as const;
 
