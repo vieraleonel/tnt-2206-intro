@@ -8,6 +8,7 @@ export function transformSearchProductsResponse(
     page: response.page,
     page_count: response.page_count,
     page_size: response.page_size,
+    result_count: response.page_size * response.page_count,
     products: [],
   };
 
@@ -30,10 +31,11 @@ type MyProductSearchResponse = {
   page: number;
   page_count: number;
   page_size: number;
+  result_count: number;
   products: MyProduct[];
 };
 
-type MyProduct = {
+export type MyProduct = {
   id: string;
   name: string;
   image_url?: string;

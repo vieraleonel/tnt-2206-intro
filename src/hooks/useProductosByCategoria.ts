@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { searchProducts } from "../services/productos.service";
 import { transformSearchProductsResponse } from "../transformers/search-products.transformer";
 
-export function useProductos(categoria: string) {
+export function useProductosByCategoria(categoria: string) {
   const response = useQuery({
     queryKey: ["products", categoria],
     staleTime: 2_000, // 5 segundos

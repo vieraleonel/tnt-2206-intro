@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_nRty9Duc4F
 createdAt: 2026-05-18T21:28:37.969941
-updatedAt: 2026-06-26T23:23:36.327005
+updatedAt: 2026-06-29T20:56:59.074303
 workspaceId: wk_xQLyVQy253
 folderId: fl_DvAr77429K
 authentication: {}
@@ -16,13 +16,13 @@ name: Buscar productos
 sortPriority: 1000.0
 url: ${[ BASE_URL ]}/api/v2/search
 urlParameters:
-- enabled: true
+- enabled: false
   name: brands_tags
   value: ferrero
   id: ismEUCPaVn
-- enabled: false
+- enabled: true
   name: categories_tags
-  value: cholate
+  value: bevereges
   id: GDDYRJI3Sm
 - enabled: false
   name: labels_tags
@@ -37,9 +37,13 @@ urlParameters:
   value: abbreviated_product_name,ecoscore_grade,id,image_url,ingredients_text,nutriscore_grade,nutriscore_score,nutriments
   id: 2hDHq6xbZ3
 - enabled: true
+  name: page_size
+  value: '5'
+  id: 3SXN4Kqkxc
+- enabled: true
   name: ''
   value: ''
-  id: XPbeauePqN
+  id: 9c82QJmuwC
 settingSendCookies:
   enabled: false
   value: true

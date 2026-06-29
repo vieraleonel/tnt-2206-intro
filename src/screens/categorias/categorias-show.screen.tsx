@@ -1,14 +1,16 @@
-import { useProductos } from "@/src/hooks/useProductos";
+import { useInfiniteProductosByCategoria } from "@/src/hooks/useInfiniteProductosByCategoria";
 import { ROUTES } from "@/src/navigation/routes";
+import { theme } from "@/src/theme/global";
+import { MyProduct } from "@/src/transformers/search-products.transformer";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 
@@ -36,7 +38,45 @@ const getNutriScoreColor = (score: string) => {
 
 export function CategoriasShowScreen() {
   const { nombre } = useLocalSearchParams<CategoriaParams>();
-  const { data } = useProductos(nombre);
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isError } =
+    useInfiniteProductosByCategoria(nombre);
+
+  const FooterComponent = () => {
+    if (isFetchingNextPage) {
+      return <ActivityIndicator size="large" color={theme.colors.primary} />;
+    }
+
+    if (hasNextPage && fetchNextPage) {
+      return (
+        <Pressable
+          onPress={() => fetchNextPage()}
+          style={{
+            flex: 1,
+            padding: 5,
+            backgroundColor: "yellow",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ fontSize: 26 }}>Cargar más</Text>
+        </Pressable>
+      );
+    }
+
+    return null;
+  };
+
+  if (isError) {
+    return (
+      <View style={styles.container}>
+        <Text>Error al cargar los productos.</Text>
+      </View>
+    );
+  }
+
+  // const productosCombinados = data?.pages.map((page) => page.products).flat() ?? [];
+  const productosCombinados2 =
+    data?.pages.flatMap((page) => page.products) ?? [];
 
   return (
     <View style={styles.container}>
@@ -47,125 +87,116 @@ export function CategoriasShowScreen() {
         <View>
           <Text style={styles.categoryTitle}>{nombre}</Text>
           <Text style={styles.itemsCount}>
-            {data?.products?.length || 0} ITEMS FOUND
+            {data?.pages[0]?.result_count ?? "-"} ITEMS FOUND
           </Text>
-        </View>
-
-        {/* Search Bar */}
-        <View style={styles.searchContainer}>
-          <Ionicons
-            name="search"
-            size={20}
-            color="#a1a1aa"
-            style={styles.searchIcon}
-          />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search juices, craft sodas, teas..."
-            placeholderTextColor="#a1a1aa"
-          />
         </View>
       </View>
 
       {/* Product List */}
       <FlatList
-        data={data?.products}
+        data={productosCombinados2}
         contentContainerStyle={styles.listContent}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Link
-            href={{ pathname: ROUTES.PRODUCTO, params: { id: item.id } }}
-            asChild
-          >
-            <Pressable
-              style={({ pressed }) => [
-                styles.productCard,
-                pressed && styles.productCardPressed,
-              ]}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 16,
-                  backgroundColor: "#ffffff",
-                  borderRadius: 12,
-                  padding: 8,
-                  shadowColor: "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: 1,
-                  },
-                  shadowOpacity: 0.22,
-                  shadowRadius: 2.22,
-
-                  elevation: 3,
-                }}
-              >
-                {/* Product Image */}
-                <View style={styles.imageContainer}>
-                  {item.image_url ? (
-                    <Image
-                      source={{ uri: item.image_url }}
-                      style={styles.productImage}
-                      resizeMode="cover"
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholder}>
-                      <Ionicons name="restaurant" size={32} color="#d4d4d8" />
-                    </View>
-                  )}
-                </View>
-
-                {/* Product Info */}
-                <View style={styles.productInfo}>
-                  <Text style={styles.productName} numberOfLines={2}>
-                    {item.name}
-                  </Text>
-                  <Text style={styles.brandName} numberOfLines={1}>
-                    {item.brands || "UNKNOWN BRAND"}
-                  </Text>
-
-                  {/* Badges */}
-                  <View style={styles.badgesContainer}>
-                    {item.nutriscore_grade && (
-                      <View
-                        style={[
-                          styles.badge,
-                          {
-                            backgroundColor: getNutriScoreColor(
-                              item.nutriscore_grade,
-                            ),
-                          },
-                        ]}
-                      >
-                        <Text style={styles.badgeText}>
-                          NUTRI-SCORE {item.nutriscore_grade.toUpperCase()}
-                        </Text>
-                      </View>
-                    )}
-                    {item.ecoscore_grade && (
-                      <View style={styles.badgeEco}>
-                        <Text style={styles.badgeEcoText}>
-                          ECO-SCORE {item.ecoscore_grade.toUpperCase()}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                </View>
-
-                {/* Chevron Icon */}
-                <View style={styles.chevronContainer}>
-                  <Ionicons name="chevron-forward" size={24} color="#d4d4d8" />
-                </View>
-              </View>
-            </Pressable>
-          </Link>
-        )}
+        renderItem={({ item }) => <ProductoItem item={item} />}
+        ListFooterComponent={<FooterComponent />}
+        //onEndReached={() => fetchNextPage()}
       />
     </View>
   );
 }
+
+const ProductoItem = ({ item }: { item: MyProduct }) => {
+  const router = useRouter();
+  return (
+    <Pressable
+      style={({ pressed }) => [
+        styles.productCard,
+        pressed && styles.productCardPressed,
+      ]}
+      onPress={() => {
+        router.push({
+          pathname: ROUTES.PRODUCTO,
+          params: { id: item.id },
+        });
+      }}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 16,
+          backgroundColor: "#ffffff",
+          borderRadius: 12,
+          padding: 8,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 1,
+          },
+          shadowOpacity: 0.22,
+          shadowRadius: 2.22,
+
+          elevation: 3,
+        }}
+      >
+        {/* Product Image */}
+        <View style={styles.imageContainer}>
+          {item.image_url ? (
+            <Image
+              source={{ uri: item.image_url }}
+              style={styles.productImage}
+              resizeMode="cover"
+            />
+          ) : (
+            <View style={styles.imagePlaceholder}>
+              <Ionicons name="restaurant" size={32} color="#d4d4d8" />
+            </View>
+          )}
+        </View>
+
+        {/* Product Info */}
+        <View style={styles.productInfo}>
+          <Text style={styles.productName} numberOfLines={2}>
+            {item.name}
+          </Text>
+          <Text style={styles.brandName} numberOfLines={1}>
+            {item.brands || "UNKNOWN BRAND"}
+          </Text>
+
+          {/* Badges */}
+          <View style={styles.badgesContainer}>
+            {item.nutriscore_grade && (
+              <View
+                style={[
+                  styles.badge,
+                  {
+                    backgroundColor: getNutriScoreColor(item.nutriscore_grade),
+                  },
+                ]}
+              >
+                <Text style={styles.badgeText}>
+                  NUTRI-SCORE {item.nutriscore_grade.toUpperCase()}
+                </Text>
+              </View>
+            )}
+            {item.ecoscore_grade && (
+              <View style={styles.badgeEco}>
+                <Text style={styles.badgeEcoText}>
+                  ECO-SCORE {item.ecoscore_grade.toUpperCase()}
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+
+        {/* Chevron Icon */}
+        <View style={styles.chevronContainer}>
+          <Ionicons name="chevron-forward" size={24} color="#d4d4d8" />
+        </View>
+      </View>
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

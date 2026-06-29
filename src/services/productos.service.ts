@@ -31,6 +31,7 @@ export async function getProduct(id: string): Promise<Product> {
 
 export async function searchProducts(
   categorias: string,
+  page: number = 1,
 ): Promise<ProductSearchResponse> {
   const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
   const url = `${BASE_URL}/v2/search`;
@@ -38,6 +39,8 @@ export async function searchProducts(
     // brands_tags: "ferrero",
     // labels_tags: "organic",
     categories_tags: categorias,
+    page_size: "5",
+    page: String(page),
   });
 
   const response = await fetch(`${url}?${params.toString()}`, {
@@ -459,12 +462,6 @@ export interface Product {
   preparation_fr_imported?: string;
   product_name_zh?: string;
   product_name_debug_tags?: any[];
-}
-
-export enum AllergensLc {
-  Ar = "ar",
-  En = "en",
-  Fr = "fr",
 }
 
 export interface CategoriesProperties {
