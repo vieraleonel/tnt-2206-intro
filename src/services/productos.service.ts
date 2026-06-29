@@ -39,7 +39,7 @@ export async function searchProducts(
     // brands_tags: "ferrero",
     // labels_tags: "organic",
     categories_tags: categorias,
-    page_size: "5",
+    page_size: "10",
     page: String(page),
   });
 

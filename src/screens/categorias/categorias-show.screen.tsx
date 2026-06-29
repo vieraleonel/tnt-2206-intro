@@ -38,28 +38,29 @@ const getNutriScoreColor = (score: string) => {
 
 export function CategoriasShowScreen() {
   const { nombre } = useLocalSearchParams<CategoriaParams>();
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isError } =
-    useInfiniteProductosByCategoria(nombre);
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isError,
+    isFetchNextPageError,
+  } = useInfiniteProductosByCategoria(nombre);
 
   const FooterComponent = () => {
+    if (!hasNextPage) {
+      return null;
+    }
+
     if (isFetchingNextPage) {
       return <ActivityIndicator size="large" color={theme.colors.primary} />;
     }
 
-    if (hasNextPage && fetchNextPage) {
+    if (isFetchNextPageError) {
       return (
-        <Pressable
-          onPress={() => fetchNextPage()}
-          style={{
-            flex: 1,
-            padding: 5,
-            backgroundColor: "yellow",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ fontSize: 26 }}>Cargar más</Text>
-        </Pressable>
+        <Text style={{ fontSize: 30, color: "red" }}>
+          Error al cargar más productos.
+        </Text>
       );
     }
 
@@ -99,7 +100,8 @@ export function CategoriasShowScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ProductoItem item={item} />}
         ListFooterComponent={<FooterComponent />}
-        //onEndReached={() => fetchNextPage()}
+        onEndReached={() => fetchNextPage()}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
