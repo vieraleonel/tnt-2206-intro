@@ -1,150 +1,114 @@
-import { categorias } from "@/src/data/categorias";
-import { etiquetas } from "@/src/data/etiquetas";
-import { marcas } from "@/src/data/marcas";
-import { AppRoute, buildRoute, ROUTES } from "@/src/navigation/routes";
-import { useRouter } from "expo-router";
-import { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import "react-native-reanimated";
-
-async function llamarApi() {
-  try {
-    const respuesta = await fetch("http://localhost:8080/categorias.json");
-    if (!respuesta.ok) {
-      throw new Error("Error en la respuesta: " + respuesta.status);
-    }
-    const data = await respuesta.json();
-    return data;
-  } catch (error) {
-    console.error("Error en la llamada a la API:", error);
-  } finally {
-    console.warn("Llamada a la API finalizada");
-  }
-
-  // fetch("http://localhost:8080/categorias.json")
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       throw new Error("Error en la respuesta: " + response.status);
-  //     }
-  //     return response.json();
-  //   })
-  //   .then((data) => console.log("Datos procesados:", data))
-  //   .catch((error) => console.log("Error:", error))
-  //   .finally(() => console.log("Fetch finalizado"));
-
-  // const promesa = fetch("http://localhost:8080/categorias.json");
-  // promesa.then(function (response) {
-  //   console.log("Respuesta recibida");
-
-  //   if (!response.ok) {
-  //     throw new Error("Error en la respuesta: " + response.status);
-  //   }
-  //   return response.json();
-  // })
-  // .then(function (data) {
-  //   console.log("Datos procesados:", data);
-  // })
-  // .catch(function (error) {
-  //   console.log("GENRAL Error:", error);
-  // });
-}
+import { CategoriasList } from "@/src/screens/home/components/categorias-list";
+import { EtiquetasList } from "@/src/screens/home/components/etiquetas-list";
+import { MarcasList } from "@/src/screens/home/components/marcas-list";
+import { theme } from "@/src/theme/global";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function IndexScreen() {
-  const [data, setData] = useState("");
-
-  // useEffect(() => {
-  //   llamarApi().then((data) => {
-  //     if (data) {
-  //       setData(JSON.stringify(data));
-  //     }
-  //   });
-  // }, []);
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <SeccionList
-        title="Categorias"
-        items={categorias}
-        route={ROUTES.CATEGORIA}
-      />
-      <Text>{data}</Text>
-      <SeccionList title="Marcas" items={marcas} route={ROUTES.MARCA} />
-      <SeccionList
-        title="Etiquetas"
-        items={etiquetas}
-        route={ROUTES.ETIQUETA}
-      />
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        {/* Hero Section */}
+        <View>
+          <Text style={styles.heroSubtitle}>CURATED FLAVORS</Text>
+          <Text style={styles.heroTitle}>
+            The art of <Text style={styles.heroTitleItalic}>conscious</Text>{" "}
+            discovery.
+          </Text>
+        </View>
+
+        {/* Categories Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Categories</Text>
+          <CategoriasList />
+        </View>
+
+        {/* Refine by Taste Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Refine by Taste</Text>
+          <EtiquetasList />
+        </View>
+
+        {/* Global Brands Section */}
+        <View style={styles.section}>
+          <View>
+            <Text style={styles.sectionTitle}>Global Brands</Text>
+            <Text style={styles.brandsSubtitle}>
+              Explored through the lens of quality.
+            </Text>
+          </View>
+
+          <MarcasList />
+        </View>
+      </View>
     </ScrollView>
   );
 }
 
-type ListItem = {
-  id: string;
-  nombre: string;
-};
-
-type SectionListProps = {
-  title: string;
-  items: ListItem[];
-  route: AppRoute;
-};
-
-const SeccionList = ({ title, items, route }: SectionListProps) => {
-  const router = useRouter();
-
-  const navToListItem = (item: ListItem) => {
-    router.push(buildRoute(route, { nombre: item.id }));
-  };
-
-  return (
-    <View style={styles.listBlock}>
-      <Text style={styles.listTitle}>{title}</Text>
-      <View style={styles.itemsContainer}>
-        {items.map((item) => (
-          <Pressable
-            key={item.id}
-            onPress={() => navToListItem(item)}
-            style={styles.itemButton}
-          >
-            <Text style={styles.itemText}>{item.nombre}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  },
   container: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 20,
-    paddingVertical: 32,
+    paddingVertical: 20,
     paddingHorizontal: 16,
+    gap: 32,
   },
-  listBlock: {
-    width: "100%",
-    maxWidth: 420,
-    gap: 12,
+  heroSubtitle: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: theme.colors.primary,
+    textTransform: "uppercase",
+    letterSpacing: 2,
+    marginBottom: 8,
   },
-  listTitle: {
+  heroTitle: {
+    fontSize: 36,
+    fontWeight: "800",
+    lineHeight: 42,
+    letterSpacing: -0.5,
+  },
+  heroTitleItalic: {
+    fontStyle: "italic",
+    color: theme.colors.primary,
+  },
+  // Section
+  section: {
+    gap: 16,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    marginBottom: 20,
+  },
+  sectionTitle: {
     fontSize: 24,
     fontWeight: "700",
   },
-  itemsContainer: {
+  viewLibrary: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: theme.colors.primary,
+  },
+
+  // Tags
+  tagsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
+    gap: 12,
+    marginTop: 20,
   },
-  itemButton: {
-    backgroundColor: "#f0f4f8",
-    borderWidth: 1,
-    borderColor: "#cbd5e1",
-    borderRadius: 999,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
+
+  // Brands
+  brandsSubtitle: {
+    fontSize: 14,
+    marginTop: 4,
   },
-  itemText: {
-    fontSize: 16,
+  brandsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 20,
   },
 });

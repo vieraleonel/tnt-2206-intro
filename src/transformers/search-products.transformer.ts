@@ -15,6 +15,10 @@ export function transformSearchProductsResponse(
     return {
       id: product._id,
       name: product.product_name,
+      image_url: product.image_url,
+      brands: product.brands,
+      nutriscore_grade: product.nutriscore_grade,
+      ecoscore_grade: product.ecoscore_grade,
     };
   });
 
@@ -32,4 +36,8 @@ type MyProductSearchResponse = {
 type MyProduct = {
   id: string;
   name: string;
+  image_url?: string;
+  brands?: string;
+  nutriscore_grade?: string;
+  ecoscore_grade?: string;
 };

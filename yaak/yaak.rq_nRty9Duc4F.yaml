@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_nRty9Duc4F
 createdAt: 2026-05-18T21:28:37.969941
-updatedAt: 2026-05-18T22:13:14.769409
+updatedAt: 2026-06-26T23:23:36.327005
 workspaceId: wk_xQLyVQy253
 folderId: fl_DvAr77429K
 authentication: {}
@@ -33,6 +33,25 @@ urlParameters:
   value: en
   id: Kqub0tvntD
 - enabled: true
+  name: fields
+  value: abbreviated_product_name,ecoscore_grade,id,image_url,ingredients_text,nutriscore_grade,nutriscore_score,nutriments
+  id: 2hDHq6xbZ3
+- enabled: true
   name: ''
   value: ''
-  id: 4DDMT7C5q0
+  id: XPbeauePqN
+settingSendCookies:
+  enabled: false
+  value: true
+settingStoreCookies:
+  enabled: false
+  value: true
+settingValidateCertificates:
+  enabled: false
+  value: true
+settingFollowRedirects:
+  enabled: false
+  value: true
+settingRequestTimeout:
+  enabled: false
+  value: 0

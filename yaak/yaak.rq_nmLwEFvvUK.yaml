@@ -1,29 +1,37 @@
 type: http_request
 model: http_request
-id: rq_92LY4moEHY
-createdAt: 2026-05-18T21:14:29.671362
-updatedAt: 2026-06-26T22:02:29.964970
+id: rq_nmLwEFvvUK
+createdAt: 2026-06-26T22:02:42.330392
+updatedAt: 2026-06-26T23:21:03.319156
 workspaceId: wk_xQLyVQy253
-folderId: fl_DvAr77429K
+folderId: fl_FdJnE7o78e
 authentication: {}
-authenticationType: none
+authenticationType: null
 body: {}
 bodyType: null
 description: ''
 headers: []
 method: GET
-name: Info de un producto
-sortPriority: 0.0
-url: ${[ BASE_URL ]}/api/v2/product/:code
+name: Buscar productos
+sortPriority: 1000.0
+url: ${[ BASE_URL ]}/cgi/search.pl
 urlParameters:
 - enabled: true
-  name: :code
-  value: 3274080005003.json
-  id: WPhfjibP0G
+  name: search_terms
+  value: coke
+  id: 0CcjxuwcPN
+- enabled: true
+  name: search_simple
+  value: '0'
+  id: wn2E5bKMNS
+- enabled: true
+  name: jqm
+  value: '1'
+  id: NVv5AXUFrm
 - enabled: true
   name: ''
   value: ''
-  id: YHbBJiajAj
+  id: 8xEBNeXT9h
 settingSendCookies:
   enabled: false
   value: true

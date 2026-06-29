@@ -1,3 +1,34 @@
+export interface ProductDetailResponse {
+  code: string;
+  product: Product;
+  status: number;
+  status_verbose: string;
+}
+
+export async function getProduct(id: string): Promise<Product> {
+  const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+  const getParams =
+    "?fields=abbreviated_product_name,ecoscore_grade,id,image_url,ingredients_text,nutriscore_grade,nutriscore_score,nutriments";
+
+  const url = `${BASE_URL}/v2/product/${encodeURIComponent(id)}${getParams}`;
+
+  const response = await fetch(url, {
+    headers: { "User-Agent": "UNTDF TNT 2026" },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error HTTP: ${response.status}`);
+  }
+
+  const data = (await response.json()) as ProductDetailResponse;
+
+  if (data.status !== 1) {
+    throw new Error("Producto no encontrado");
+  }
+
+  return data.product;
+}
+
 export async function searchProducts(
   categorias: string,
 ): Promise<ProductSearchResponse> {
@@ -5,7 +36,31 @@ export async function searchProducts(
   const url = `${BASE_URL}/v2/search`;
   const params = new URLSearchParams({
     // brands_tags: "ferrero",
+    // labels_tags: "organic",
     categories_tags: categorias,
+  });
+
+  const response = await fetch(`${url}?${params.toString()}`, {
+    headers: { "User-Agent": "UNTDF TNT 2026" },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error HTTP: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  return data as ProductSearchResponse;
+}
+
+export async function searchProductsByQuery(
+  query: string,
+): Promise<ProductSearchResponse> {
+  const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+  const url = `${BASE_URL}/v2/search`;
+  const params = new URLSearchParams({
+    search_terms: query,
+    fields: "id,product_name,brands,image_url,nutriscore_grade,ecoscore_grade",
   });
 
   const response = await fetch(`${url}?${params.toString()}`, {
